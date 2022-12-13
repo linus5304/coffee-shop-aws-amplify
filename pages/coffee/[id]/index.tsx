@@ -1,11 +1,9 @@
-import { Box, Button, Flex, Input, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Input, Text } from "@chakra-ui/react";
 import Image from "next/legacy/image";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { InputField } from "../../../components/InputField";
-import { CoffeeDto, coffeeData } from "../../../src/data";
+import React from "react";
 import useStore from "../../../store/store";
-import { formatter } from "../../utils";
+import { formatter } from "../../../utils/utils";
 
 interface CoffeeItemProps {
   image: string;
@@ -23,11 +21,8 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
     setNewCoffee,
     addQuantity,
     removeQuantity,
-    coffeeList,
-    coffeeInCart,
     selectedItem,
     setCartQuantity,
-    setTotal,
   } = useStore();
 
   return (

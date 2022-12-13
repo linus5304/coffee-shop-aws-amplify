@@ -1,22 +1,14 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import {
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Box,
-  VStack,
-  Flex,
+  Box, Button, Flex
 } from "@chakra-ui/react";
 import { API } from "aws-amplify";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../../components/InputField";
 import { CreateCategoryInput } from "../../src/API";
-import { createCategory, createCoffee } from "../../src/graphql/mutations";
+import { createCategory } from "../../src/graphql/mutations";
 import useStore from "../../store/store";
 
 interface AddProps {}

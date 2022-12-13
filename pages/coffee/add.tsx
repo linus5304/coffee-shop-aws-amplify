@@ -1,20 +1,12 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import {
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Box,
-  VStack,
-  Flex,
+  Box, Button, Flex
 } from "@chakra-ui/react";
 import { API } from "aws-amplify";
-import { Formik, Form } from "formik";
+import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
-import * as z  from "yup";
+import React from "react";
+import * as z from "yup";
 import { InputField } from "../../components/InputField";
 import { CreateCoffeeInput } from "../../src/API";
 import { CoffeeDto } from "../../src/data";

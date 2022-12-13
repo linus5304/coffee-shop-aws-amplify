@@ -1,11 +1,11 @@
+import { Authenticator } from "@aws-amplify/ui-react";
+import '@aws-amplify/ui-react/styles.css';
 import { ChakraProvider } from "@chakra-ui/react";
+import { Poppins } from "@next/font/google";
+import { Amplify } from "aws-amplify";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
-import { Poppins } from "@next/font/google";
-import { Authenticator, View } from "@aws-amplify/ui-react";
-import '@aws-amplify/ui-react/styles.css'; 
-import { Amplify } from "aws-amplify";
-import awsConfig from '../src/aws-exports'
+import awsConfig from '../src/aws-exports';
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400"] });
 
