@@ -1,15 +1,20 @@
-export type Coffee = {
-  id: number;
-  title: string;
-  price: number;
-  catergory?: string;
-  image: string;
-  ingredients: string[];
-  quantity: number;
-  description?: string;
+export type CoffeeDto = {
+  id?: string | null,
+  title?: string | null;
+  price?: number | null;
+  image?: string | null;
+  ingredients?: (string | null)[] | null;
+  quantity?: number | null;
+  description?: string | null;
+  categoryCoffeeId?: string | null;
 };
 
-export const coffeeData: Coffee[] = [
+export type CategoryDto = {
+  id: string;
+  name: string;
+};
+
+export const coffeeData: CoffeeDto[] = [
   {
     title: "Black",
     description:
@@ -19,7 +24,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG",
     price: 20,
     quantity: 1,
-    id: 1,
+    id: "1",
   },
   {
     title: "Latte",
@@ -30,7 +35,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Latte_at_Doppio_Ristretto_Chiang_Mai_01.jpg/509px-Latte_at_Doppio_Ristretto_Chiang_Mai_01.jpg",
     price: 20,
     quantity: 1,
-    id: 2,
+    id: "2",
   },
   {
     title: "Cappuccino",
@@ -41,7 +46,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/e/ed/Wet_Cappuccino_with_heart_latte_art.jpg",
     price: 20,
     quantity: 1,
-    id: 3,
+    id: "3",
   },
   {
     title: "Americano",
@@ -52,7 +57,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Hokitika_Cheese_and_Deli%2C_Hokitika_%283526706594%29.jpg/1280px-Hokitika_Cheese_and_Deli%2C_Hokitika_%283526706594%29.jpg",
     price: 20,
     quantity: 1,
-    id: 4,
+    id: "4",
   },
   {
     title: "Espresso",
@@ -63,7 +68,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/a/a5/Tazzina_di_caff%C3%A8_a_Ventimiglia.jpg",
     price: 20,
     quantity: 1,
-    id: 5,
+    id: "5",
   },
   {
     title: "Doppio",
@@ -74,7 +79,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Doppio.jpg/2560px-Doppio.jpg",
     price: 20,
     quantity: 1,
-    id: 6,
+    id: "6",
   },
   {
     title: "Cortado",
@@ -85,7 +90,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/16/Caf%C3%A9Cortado%28Tallat%29.jpg",
     price: 20,
     quantity: 1,
-    id: 7,
+    id: "7",
   },
   {
     title: "Red Eye",
@@ -96,7 +101,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/f/f7/Linea_doubleespresso.jpg",
     price: 20,
     quantity: 1,
-    id: 8,
+    id: "8",
   },
   {
     title: "Galão",
@@ -107,7 +112,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gal%C3%A3o.jpg/1280px-Gal%C3%A3o.jpg",
     price: 20,
     quantity: 1,
-    id: 9,
+    id: "9",
   },
   {
     title: "Lungo",
@@ -118,7 +123,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/6a/Caff%C3%A8_lungo.JPG",
     price: 20,
     quantity: 1,
-    id: 10,
+    id: "10",
   },
   {
     title: "Macchiato",
@@ -129,7 +134,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/0/07/Caff%C3%A8_Espresso_Macchiato_Schiumato.jpg",
     price: 20,
     quantity: 1,
-    id: 11,
+    id: "11",
   },
   {
     title: "Mocha",
@@ -140,7 +145,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/f/f6/Mocaccino-Coffee.jpg",
     price: 20,
     quantity: 1,
-    id: 12,
+    id: "12",
   },
   {
     title: "Ristretto",
@@ -151,7 +156,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/12/Doppio_ristretto_Chiang_Mai.jpg",
     price: 20,
     quantity: 1,
-    id: 13,
+    id: "13",
   },
   {
     title: "Flat White",
@@ -162,7 +167,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/6b/Flat_white_coffee_with_pretty_feather_pattern.jpg",
     price: 20,
     quantity: 1,
-    id: 14,
+    id: "14",
   },
   {
     title: "Affogato",
@@ -173,7 +178,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/17/Vinoteca%2C_Smithfield%2C_London_%284485849609%29.jpg",
     price: 20,
     quantity: 1,
-    id: 15,
+    id: "15",
   },
   {
     title: "Café au Lait",
@@ -183,7 +188,7 @@ export const coffeeData: Coffee[] = [
     image: "https://upload.wikimedia.org/wikipedia/commons/0/06/Latte_art.jpg",
     price: 20,
     quantity: 1,
-    id: 16,
+    id: "16",
   },
   {
     title: "Irish",
@@ -194,7 +199,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/61/Irish_coffee_glass.jpg",
     price: 20,
     quantity: 1,
-    id: 17,
+    id: "17",
   },
   {
     title: "Guayoyo",
@@ -205,7 +210,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG",
     price: 20,
     quantity: 1,
-    id: 18,
+    id: "18",
   },
   {
     title: "Cortadito",
@@ -216,7 +221,7 @@ export const coffeeData: Coffee[] = [
       "https://upload.wikimedia.org/wikipedia/commons/9/9b/Cuban_coffee-_2013-04-05_14-30.jpg",
     price: 20,
     quantity: 1,
-    id: 19,
+    id: "19",
   },
   {
     title: "Aguapanela Coffee",
@@ -227,6 +232,6 @@ export const coffeeData: Coffee[] = [
       "https://commons.wikimedia.org/wiki/File:Agua_Panela_con_Queso_Fresco_at_La_Puerta_Falsa_(5617496209).jpg#/media/File:Agua_Panela_con_Queso_Fresco_at_La_Puerta_Falsa_(5617496209).jpg",
     price: 20,
     quantity: 1,
-    id: 20,
+    id: "20",
   },
 ];

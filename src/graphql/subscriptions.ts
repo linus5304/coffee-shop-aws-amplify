@@ -10,8 +10,12 @@ export const onCreateCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -31,8 +35,12 @@ export const onUpdateCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -52,8 +60,12 @@ export const onDeleteCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -69,8 +81,12 @@ export const onCreateCoffee = /* GraphQL */ `
   subscription OnCreateCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
     onCreateCoffee(filter: $filter) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId
@@ -81,8 +97,12 @@ export const onUpdateCoffee = /* GraphQL */ `
   subscription OnUpdateCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
     onUpdateCoffee(filter: $filter) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId
@@ -93,8 +113,12 @@ export const onDeleteCoffee = /* GraphQL */ `
   subscription OnDeleteCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
     onDeleteCoffee(filter: $filter) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId

@@ -4,11 +4,14 @@ const nextConfig = {
   //   appDir: true,
   // },
   images: {
-    domains: ['upload.wikimedia.org', 'commons.wikimedia.org']
+    domains: [
+      "upload.wikimedia.org",
+      "commons.wikimedia.org",
+      "coffee.alexflipnote.dev",
+    ],
   },
   reactStrictMode: true,
   swcMinify: true,
-
 };
 
 module.exports = nextConfig;

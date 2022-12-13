@@ -13,8 +13,12 @@ export const createCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -37,8 +41,12 @@ export const updateCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -61,8 +69,12 @@ export const deleteCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -81,8 +93,12 @@ export const createCoffee = /* GraphQL */ `
   ) {
     createCoffee(input: $input, condition: $condition) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId
@@ -96,8 +112,12 @@ export const updateCoffee = /* GraphQL */ `
   ) {
     updateCoffee(input: $input, condition: $condition) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId
@@ -111,8 +131,12 @@ export const deleteCoffee = /* GraphQL */ `
   ) {
     deleteCoffee(input: $input, condition: $condition) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId

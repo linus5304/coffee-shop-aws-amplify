@@ -10,16 +10,32 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Image from "next/legacy/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useStore from "../store/store";
 
 interface CoffeeCardProps {
-    image: string
-    title: string
-    desctiption?: string
-    price: number
+  image: string;
+  title: string;
+  desctiption?: string;
+  price: number;
+  categoryCoffeeId: string;
 }
 
-export const CoffeeCard: React.FC<CoffeeCardProps> = ({title, price, desctiption, image}) => {
+export const CoffeeCard: React.FC<CoffeeCardProps> = ({
+  title,
+  price,
+  desctiption,
+  image,
+  categoryCoffeeId,
+}) => {
+  const [category, setCategory] = useState("");
+  const { categoryList } = useStore();
+  useEffect(() => {
+    const item = categoryList.find(item => item.id === categoryCoffeeId);
+    setCategory(item?.name ?? "");
+    console.log("cat id", categoryCoffeeId)
+    console.log("item", item)
+  }, []);
   return (
     <Card maxW="sm">
       <CardBody>
@@ -29,28 +45,20 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({title, price, desctiption
           layout="responsive"
           width={200}
           height={150}
+          priority={true}
         />
         <Stack mt="6" spacing="3">
           <Heading size="md">{title}</Heading>
-          <Text>
-            {desctiption}
-          </Text>
+          <Text>{desctiption}</Text>
           <Text color="blue.600" fontSize="2xl">
             {price}
+          </Text>
+          <Text fontSize="sm" fontWeight="bold">
+            {category}
           </Text>
         </Stack>
       </CardBody>
       <Divider />
-      <CardFooter>
-        <ButtonGroup spacing="2">
-          <Button variant="solid" colorScheme="blue">
-            Buy now
-          </Button>
-          <Button variant="ghost" colorScheme="blue">
-            Add to cart
-          </Button>
-        </ButtonGroup>
-      </CardFooter>
     </Card>
   );
 };

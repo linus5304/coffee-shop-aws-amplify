@@ -3,7 +3,7 @@ import Image from "next/legacy/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { InputField } from "../../../components/InputField";
-import { Coffee, coffeeData } from "../../../src/data";
+import { CoffeeDto, coffeeData } from "../../../src/data";
 import useStore from "../../../store/store";
 import { formatter } from "../../utils";
 
@@ -30,10 +30,6 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
     setTotal,
   } = useStore();
 
-  // const selectedItem = coffeeList.find(
-  //   item => item.id === parseInt(id as string)
-  // ) as Coffee;
-
   return (
     <Box my={20}>
       <Flex gap={10} direction={{ base: "column", md: "row" }}>
@@ -43,6 +39,7 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
             height={500}
             width={400}
             layout="fixed"
+            priority={true}
           />
         </Box>
         <Box>
@@ -58,7 +55,7 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
               <Button onClick={() => removeQuantity(selectedItem)}>-</Button>
               <Input
                 width={20}
-                value={selectedItem.quantity}
+                value={selectedItem?.quantity ?? 1}
                 type="number"
                 placeholder="0"
               />

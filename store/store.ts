@@ -1,36 +1,67 @@
+import { API } from "aws-amplify";
 import create from "zustand";
-import { Coffee, coffeeData } from "../src/data";
+import { CreateCoffeeInput } from "../src/API";
+import { CategoryDto, CoffeeDto, coffeeData } from "../src/data";
+import { getCategory, listCategories, listCoffees } from "../src/graphql/queries";
 // create store
 type Store = {
   total: number;
   setTotal: () => void;
-  coffeeList: Coffee[];
-  coffeeInCart: Coffee[];
+  coffeeList: CoffeeDto[];
+  categoryList: CategoryDto[];
+  setCategoryList: () => void;
+  setCoffeeList: () => void;
+  coffeeInCart: CoffeeDto[];
   addCoffee: () => void;
-  newCoffee: Coffee;
-  selectedItem: Coffee;
+  newCoffee: CoffeeDto;
+  selectedItem: CoffeeDto;
   cartQuantity: number;
-  setSelectedItem: (item: Coffee) => void;
-  setNewCoffee: (coffee: Coffee | undefined) => void;
+  setSelectedItem: (item: CoffeeDto) => void;
+  setNewCoffee: (coffee: CreateCoffeeInput) => void;
   addToCart: () => void;
-  addQuantity: (item: Coffee) => void;
-  removeQuantity: (item: Coffee) => void;
+  addQuantity: (item: CoffeeDto) => void;
+  removeQuantity: (item: CoffeeDto) => void;
   setCartQuantity: () => void;
-  updateCartItem: (id: number, data: Coffee) => void;
-  deleteCartItem: (id: number, cartList: Coffee[]) => void;
+  updateCartItem: (id: string, data: CoffeeDto) => void;
+  deleteCartItem: (id: string, cartList: CoffeeDto[]) => void;
 };
 
-const addCoffee = (coffeeList: Coffee[], newCoffee: Coffee) => {
+async function getCategoryList() {
+  try {
+    const result = await API.graphql<CategoryDto>({
+      authMode: "API_KEY",
+      query: listCategories,
+    });
+    console.log("Categories ", result);
+    return result.data.listCategories.items as CategoryDto[];
+  } catch (error) {
+    console.log("Errors ", error);
+  }
+}
+async function getCoffeeList() {
+  try {
+    const result = await API.graphql<CategoryDto>({
+      authMode: "API_KEY",
+      query: listCoffees,
+    });
+    console.log("Coffee ", result);
+    return result.data.listCoffees.items as CoffeeDto[];
+  } catch (error) {
+    console.log("Errors ", error);
+  }
+}
+
+const addCoffee = (coffeeList: CoffeeDto[], newCoffee: CoffeeDto) => {
   return [...coffeeList, newCoffee];
 };
 
-const addToCart = (cartList: Coffee[], newCoffee: Coffee) => {
+const addToCart = (cartList: CoffeeDto[], newCoffee: CoffeeDto) => {
   const data = cartList.find(item => item.id === newCoffee.id);
   if (data) {
     return [
       ...cartList.map(item => {
         if (item.id === data.id)
-          return { ...item, quantity: item.quantity + newCoffee.quantity };
+          return { ...item, quantity: item.quantity! + newCoffee.quantity! };
         return item;
       }),
     ];
@@ -38,32 +69,40 @@ const addToCart = (cartList: Coffee[], newCoffee: Coffee) => {
   return [...cartList, newCoffee];
 };
 
-const updateCartItem = (cartList: Coffee[], id: number, newItem: Coffee) => {
+const updateCartItem = (cartList: CoffeeDto[], id: string, newItem: CoffeeDto) => {
   return cartList.map(item => {
     if (item.id === id) return { ...newItem };
     return item;
   });
 };
 
-const setSelectedItem = (item: Coffee) => {
+const setSelectedItem = (item: CoffeeDto) => {
   return item;
 };
-const setCartQuantity = (cartItems: Coffee[]) => {
-  return cartItems.reduce((a, c) => a + c.quantity, 0);
+const setCartQuantity = (cartItems: CoffeeDto[]) => {
+  return cartItems.reduce((a, c) => a + c.quantity!, 0);
 };
 
-const deleteItem = (cartItems: Coffee[], id: number) => {
+const deleteItem = (cartItems: CoffeeDto[], id: string) => {
   return cartItems.filter(item => item.id !== id);
 };
 
 const useStore = create<Store>()(set => ({
-  coffeeList: coffeeData,
+  coffeeList: [],
   coffeeInCart: [],
   quantity: 1,
   selectedItem: null!,
   cartQuantity: 0,
   total: 0,
-  setSelectedItem(item: Coffee) {
+  categoryList: [],
+  setCoffeeList: async () => {
+    const data = await getCoffeeList()
+    set(state => ({
+      ...state,
+      coffeeList: data,
+    }));
+  },
+  setSelectedItem(item: CoffeeDto) {
     set(state => ({
       ...state,
       selectedItem: setSelectedItem(item),
@@ -77,7 +116,7 @@ const useStore = create<Store>()(set => ({
     }));
   },
   newCoffee: null!,
-  setNewCoffee(data: Coffee | undefined) {
+  setNewCoffee(data: CoffeeDto | undefined) {
     set(state => ({
       ...state,
       newCoffee: data,
@@ -89,18 +128,18 @@ const useStore = create<Store>()(set => ({
       coffeeInCart: addToCart(state.coffeeInCart, state.newCoffee),
     }));
   },
-  addQuantity(data: Coffee) {
+  addQuantity(data: CoffeeDto) {
     set(state => ({
       ...state,
-      selectedItem: setSelectedItem({ ...data, quantity: data.quantity + 1 }),
+      selectedItem: setSelectedItem({ ...data, quantity: data.quantity! + 1 }),
     }));
   },
-  removeQuantity(data: Coffee) {
+  removeQuantity(data: CoffeeDto) {
     set(state => ({
       ...state,
       selectedItem: setSelectedItem({
         ...data,
-        quantity: data.quantity > 0 ? data.quantity - 1 : data.quantity,
+        quantity: data.quantity && data.quantity > 0 ? data.quantity - 1 : data.quantity,
       }),
     }));
   },
@@ -110,7 +149,7 @@ const useStore = create<Store>()(set => ({
       cartQuantity: setCartQuantity(state.coffeeInCart),
     }));
   },
-  updateCartItem(id: number, data: Coffee) {
+  updateCartItem(id: string, data: CoffeeDto) {
     set(state => ({
       ...state,
       coffeeInCart: updateCartItem(state.coffeeInCart, id, data),
@@ -119,13 +158,20 @@ const useStore = create<Store>()(set => ({
   setTotal() {
     set(state => ({
       ...state,
-      total: state.coffeeInCart.reduce((a, c) => a + c.price * c.quantity, 0),
+      total: state.coffeeInCart.reduce((a, c) => a + c.price! * c.quantity!, 0),
     }));
   },
-  deleteCartItem(id: number) {
+  deleteCartItem(id: string) {
     set(state => ({
       ...state,
       coffeeInCart: deleteItem(state.coffeeInCart, id),
+    }));
+  },
+  setCategoryList: async () => {
+    const data = await getCategoryList();
+    set(state => ({
+      ...state,
+      categoryList: data,
     }));
   },
 }));

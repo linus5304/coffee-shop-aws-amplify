@@ -12,16 +12,16 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
-import { Coffee } from "../src/data";
+import { CoffeeDto } from "../src/data";
 import useStore from "../store/store";
 import { AiFillDelete } from "react-icons/ai";
 
 interface CartItemProps {
-  data: Coffee;
+  data: CoffeeDto;
 }
 
 export const CartItem: React.FC<CartItemProps> = ({ data }) => {
-  const [count, setCount] = useState(data.quantity);
+  const [count, setCount] = useState(data.quantity as number);
   const {
     setCartQuantity,
     updateCartItem,
@@ -31,7 +31,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
   } = useStore();
 
   useEffect(() => {
-    updateCartItem(data.id, { ...data, quantity: count });
+    updateCartItem(data?.id ?? '', { ...data, quantity: count });
     setCartQuantity();
     setTotal();
   }, [count]);
@@ -41,7 +41,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
           <Box>
             <Image
-              src={data.image}
+              src={data?.image ?? ''}
               alt="Green double couch with wooden legs"
               layout="fixed"
               width={50}
@@ -56,7 +56,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
             {data.quantity}
           </Text>
           <Text color="blue.600" fontSize="2xl">
-            {data.quantity * data.price}
+            {data?.quantity ?? 1 * data?.price!}
           </Text>
           <Box>
             <Flex gap={2}>
@@ -81,7 +81,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
               <IconButton
                 aria-label="delete"
                 onClick={() => {
-                  deleteCartItem(data.id, coffeeInCart);
+                  deleteCartItem(data.id ?? '', coffeeInCart);
                   setCartQuantity();
                   setTotal();
                 }}

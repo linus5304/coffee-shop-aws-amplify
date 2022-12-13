@@ -10,8 +10,12 @@ export const getCategory = /* GraphQL */ `
       coffee {
         items {
           id
-          name
+          title
           price
+          image
+          ingredients
+          quantity
+          description
           createdAt
           updatedAt
           categoryCoffeeId
@@ -47,8 +51,12 @@ export const getCoffee = /* GraphQL */ `
   query GetCoffee($id: ID!) {
     getCoffee(id: $id) {
       id
-      name
+      title
       price
+      image
+      ingredients
+      quantity
+      description
       createdAt
       updatedAt
       categoryCoffeeId
@@ -64,8 +72,12 @@ export const listCoffees = /* GraphQL */ `
     listCoffees(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        title
         price
+        image
+        ingredients
+        quantity
+        description
         createdAt
         updatedAt
         categoryCoffeeId

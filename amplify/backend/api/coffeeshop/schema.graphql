@@ -10,6 +10,10 @@ type Category @model {
 
 type Coffee @model {
   id: ID!
-  name: String!
-  price: Int!
+  title: String
+  price: Int
+  image: String
+  ingredients: [String]
+  quantity: Int
+  description: String
 }
