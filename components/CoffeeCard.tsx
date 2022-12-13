@@ -12,6 +12,7 @@ import {
 import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
 import useStore from "../store/store";
+import { formatter } from "../utils/utils";
 
 interface CoffeeCardProps {
   image: string;
@@ -51,7 +52,7 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
           <Heading size="md">{title}</Heading>
           <Text>{desctiption}</Text>
           <Text color="blue.600" fontSize="2xl">
-            {price}
+            {formatter.format(price)}
           </Text>
           <Text fontSize="sm" fontWeight="bold">
             {category}

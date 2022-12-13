@@ -3,7 +3,12 @@ import { GraphQLQuery } from "@aws-amplify/api";
 import create from "zustand";
 import { CreateCoffeeInput, ListCategoriesQuery } from "../src/API";
 import { CategoryDto, CoffeeDto, coffeeData } from "../src/data";
-import { getCategory, listCategories, listCoffees } from "../src/graphql/queries";
+import {
+  getCategory,
+  listCategories,
+  listCoffees,
+} from "../src/graphql/queries";
+import { createCoffee } from "../src/graphql/mutations";
 // create store
 type Store = {
   total: number;
@@ -29,12 +34,12 @@ type Store = {
 
 async function getCategoryList() {
   try {
-    const result = await API.graphql<{data: any}>({
+    const result = await API.graphql<{ data: any }>({
       authMode: "API_KEY",
       query: listCategories,
     });
     console.log("Categories ", result);
-    return result['data'].listCategories.items as CategoryDto[];
+    return result["data"].listCategories.items as CategoryDto[];
   } catch (error) {
     console.log("Errors ", error);
   }
@@ -46,7 +51,21 @@ async function getCoffeeList() {
       query: listCoffees,
     });
     console.log("Coffee ", result);
-    return result['data'].listCoffees.items as CoffeeDto[];
+    return result["data"].listCoffees.items as CoffeeDto[];
+  } catch (error) {
+    console.log("Errors ", error);
+  }
+}
+
+export async function handleCreateCoffee(data: CreateCoffeeInput) {
+  try {
+    await API.graphql<{ data: any }>({
+      authMode: "API_KEY",
+      query: createCoffee,
+      variables: {
+        input: data,
+      },
+    });
   } catch (error) {
     console.log("Errors ", error);
   }
@@ -70,7 +89,11 @@ const addToCart = (cartList: CoffeeDto[], newCoffee: CoffeeDto) => {
   return [...cartList, newCoffee];
 };
 
-const updateCartItem = (cartList: CoffeeDto[], id: string, newItem: CoffeeDto) => {
+const updateCartItem = (
+  cartList: CoffeeDto[],
+  id: string,
+  newItem: CoffeeDto
+) => {
   return cartList.map(item => {
     if (item.id === id) return { ...newItem };
     return item;
@@ -97,7 +120,7 @@ const useStore = create<Store>()(set => ({
   total: 0,
   categoryList: [],
   setCoffeeList: async () => {
-    const data = await getCoffeeList()
+    const data = await getCoffeeList();
     set(state => ({
       ...state,
       coffeeList: data,
@@ -140,7 +163,10 @@ const useStore = create<Store>()(set => ({
       ...state,
       selectedItem: setSelectedItem({
         ...data,
-        quantity: data.quantity && data.quantity > 0 ? data.quantity - 1 : data.quantity,
+        quantity:
+          data.quantity && data.quantity > 0
+            ? data.quantity - 1
+            : data.quantity,
       }),
     }));
   },

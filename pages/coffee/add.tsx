@@ -28,7 +28,7 @@ const Add: React.FC<AddProps> = ({}) => {
 
   async function handleCreatePost(data: CreateCoffeeInput) {
     try {
-      await API.graphql<CoffeeDto>({
+      await API.graphql<{data: any}>({
         authMode: "API_KEY",
         query: createCoffee,
         variables: {

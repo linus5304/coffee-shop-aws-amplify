@@ -2,12 +2,13 @@ import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
 import { Amplify, API, withSSRContext } from "aws-amplify";
 import Link from "next/link";
 import { CoffeeCard } from "../components/CoffeeCard";
-import useStore from "../store/store";
+import useStore, { handleCreateCoffee } from "../store/store";
 import awsExports from "../src/aws-exports";
 import { listCoffees } from "../src/graphql/queries";
-import { CoffeeDto } from "../src/data";
+import { coffeeData, CoffeeDto } from "../src/data";
 import { useEffect } from "react";
 import { createCoffee } from "../src/graphql/mutations";
+import { seedCoffeeDB } from "../utils/seed";
 
 interface HomePageProps {
   data: CoffeeDto[];
@@ -33,12 +34,21 @@ Amplify.configure({ ...awsExports, ssr: true });
 // }
 
 const HomePage: React.FC<HomePageProps> = ({ data }) => {
-  const { coffeeList, setCoffeeList, setSelectedItem, setCategoryList } =
-    useStore();
+  const {
+    coffeeList,
+    setCoffeeList,
+    setSelectedItem,
+    setCategoryList,
+    addCoffee,
+  } = useStore();
 
   useEffect(() => {
     setCategoryList();
     setCoffeeList();
+    // for (let coffee of coffeeData) {
+    //   handleCreateCoffee(coffee);
+    //   addCoffee();
+    // }
   }, []);
   return (
     <Box>
@@ -51,11 +61,11 @@ const HomePage: React.FC<HomePageProps> = ({ data }) => {
           >
             <GridItem>
               <CoffeeCard
-                title={item?.title ?? ''}
-                desctiption={item?.description ?? ''}
-                image={item?.image ?? ''}
+                title={item?.title ?? ""}
+                desctiption={item?.description ?? ""}
+                image={item?.image ?? ""}
                 price={item?.price ?? 0}
-                categoryCoffeeId={item?.categoryCoffeeId ?? ''}
+                categoryCoffeeId={item?.categoryCoffeeId ?? ""}
               />
             </GridItem>
           </Link>
