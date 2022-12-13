@@ -1,6 +1,7 @@
 import { API } from "aws-amplify";
+import { GraphQLQuery } from "@aws-amplify/api";
 import create from "zustand";
-import { CreateCoffeeInput } from "../src/API";
+import { CreateCoffeeInput, ListCategoriesQuery } from "../src/API";
 import { CategoryDto, CoffeeDto, coffeeData } from "../src/data";
 import { getCategory, listCategories, listCoffees } from "../src/graphql/queries";
 // create store
@@ -28,12 +29,12 @@ type Store = {
 
 async function getCategoryList() {
   try {
-    const result = await API.graphql<CategoryDto>({
+    const result = await API.graphql<{data: any}>({
       authMode: "API_KEY",
       query: listCategories,
     });
     console.log("Categories ", result);
-    return result.data.listCategories.items as CategoryDto[];
+    return result['data'].listCategories.items as CategoryDto[];
   } catch (error) {
     console.log("Errors ", error);
   }
@@ -45,7 +46,7 @@ async function getCoffeeList() {
       query: listCoffees,
     });
     console.log("Coffee ", result);
-    return result.data.listCoffees.items as CoffeeDto[];
+    return result['data'].listCoffees.items as CoffeeDto[];
   } catch (error) {
     console.log("Errors ", error);
   }
