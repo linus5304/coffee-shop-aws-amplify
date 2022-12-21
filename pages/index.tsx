@@ -1,37 +1,19 @@
-import { Box, Flex, Grid, GridItem } from "@chakra-ui/react";
-import { Amplify, API, withSSRContext } from "aws-amplify";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Amplify } from "aws-amplify";
 import Link from "next/link";
-import { CoffeeCard } from "../components/CoffeeCard";
-import useStore, { handleCreateCoffee } from "../store/store";
-import awsExports from "../src/aws-exports";
-import { listCoffees } from "../src/graphql/queries";
-import { coffeeData, CoffeeDto } from "../src/data";
 import { useEffect } from "react";
-import { createCoffee } from "../src/graphql/mutations";
-import { seedCoffeeDB } from "../utils/seed";
+import { CoffeeCard } from "../components/CoffeeCard";
+import awsExports from "../src/aws-exports";
+import { coffeeData, ProductDto } from "../src/data";
+import useStore from "../store/store";
+import { handleCreateProduct } from "../store/api";
 
 interface HomePageProps {
-  data: CoffeeDto[];
+  data: ProductDto[];
 }
 
 Amplify.configure({ ...awsExports, ssr: true });
-
-// export async function getServerSideProps({ req }) {
-//   const SSR = withSSRContext({ req });
-//   try {
-//     const response = await SSR.API.graphql({ query: listCoffees });
-//     return {
-//       props: {
-//         data: response.data.listCoffees.items,
-//       },
-//     };
-//   } catch (err) {
-//     console.log(err);
-//     return {
-//       props: {},
-//     };
-//   }
-// }
 
 const HomePage: React.FC<HomePageProps> = ({ data }) => {
   const {
@@ -42,18 +24,19 @@ const HomePage: React.FC<HomePageProps> = ({ data }) => {
     addCoffee,
   } = useStore();
 
+  const { user } = useAuthenticator(ctx => [ctx.user]);
   useEffect(() => {
-    setCategoryList();
+    // setCategoryList();
     setCoffeeList();
     // for (let coffee of coffeeData) {
-    //   handleCreateCoffee(coffee);
-    //   addCoffee();
+    //   handleCreateProduct(coffee);
+    //   // addCoffee();
     // }
   }, []);
   return (
     <Box>
-      <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-        {coffeeList.map(item => (
+      <Grid gridTemplateColumns={{sm: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)'}} gap={4}>
+        {coffeeList?.map(item => (
           <Link
             href={`/coffee/${item.id}`}
             key={item.id}
@@ -65,7 +48,7 @@ const HomePage: React.FC<HomePageProps> = ({ data }) => {
                 desctiption={item?.description ?? ""}
                 image={item?.image ?? ""}
                 price={item?.price ?? 0}
-                categoryCoffeeId={item?.categoryCoffeeId ?? ""}
+                categoryCoffeeId={item?.categoryProductsId ?? ""}
               />
             </GridItem>
           </Link>

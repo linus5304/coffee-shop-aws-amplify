@@ -85,10 +85,10 @@ const useStore = create<Store>()(set => ({
   categoryList: [],
   userOrders: [],
   setCoffeeList: async () => {
-    const data = await getCoffeeList();
+    // const data = await getCoffeeList();
     set(state => ({
       ...state,
-      coffeeList: data,
+      coffeeList: coffeeData,
     }));
   },
   setSelectedItem(item: ProductDto) {

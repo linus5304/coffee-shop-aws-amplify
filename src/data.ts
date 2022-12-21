@@ -6,11 +6,11 @@ export type ProductDto = {
   ingredients?: (string | null)[] | null;
   quantity?: number | null;
   description?: string | null;
-  categoryCoffeeId?: string | null;
+  categoryProductsId?: string | null;
 };
 
 export type CategoryDto = {
-  categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e";
+  categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e";
   id: string;
   name: string;
 };
@@ -25,7 +25,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "1",
   },
   {
@@ -37,7 +37,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Latte_at_Doppio_Ristretto_Chiang_Mai_01.jpg/509px-Latte_at_Doppio_Ristretto_Chiang_Mai_01.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "2",
   },
   {
@@ -49,7 +49,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/e/ed/Wet_Cappuccino_with_heart_latte_art.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "3",
   },
   {
@@ -61,7 +61,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Hokitika_Cheese_and_Deli%2C_Hokitika_%283526706594%29.jpg/1280px-Hokitika_Cheese_and_Deli%2C_Hokitika_%283526706594%29.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "4",
   },
   {
@@ -73,7 +73,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/a/a5/Tazzina_di_caff%C3%A8_a_Ventimiglia.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "5",
   },
   {
@@ -85,7 +85,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Doppio.jpg/2560px-Doppio.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "6",
   },
   {
@@ -97,7 +97,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/16/Caf%C3%A9Cortado%28Tallat%29.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "7",
   },
   {
@@ -109,7 +109,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/f/f7/Linea_doubleespresso.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "8",
   },
   {
@@ -121,7 +121,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Gal%C3%A3o.jpg/1280px-Gal%C3%A3o.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "9",
   },
   {
@@ -133,7 +133,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/6a/Caff%C3%A8_lungo.JPG",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "10",
   },
   {
@@ -145,7 +145,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/0/07/Caff%C3%A8_Espresso_Macchiato_Schiumato.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "11",
   },
   {
@@ -157,7 +157,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/f/f6/Mocaccino-Coffee.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "12",
   },
   {
@@ -169,7 +169,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/12/Doppio_ristretto_Chiang_Mai.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "13",
   },
   {
@@ -181,7 +181,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/6b/Flat_white_coffee_with_pretty_feather_pattern.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "14",
   },
   {
@@ -193,7 +193,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/1/17/Vinoteca%2C_Smithfield%2C_London_%284485849609%29.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "15",
   },
   {
@@ -204,7 +204,7 @@ export const coffeeData: ProductDto[] = [
     image: "https://upload.wikimedia.org/wikipedia/commons/0/06/Latte_art.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "16",
   },
   {
@@ -216,7 +216,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/6/61/Irish_coffee_glass.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "17",
   },
   {
@@ -228,7 +228,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/640px-A_small_cup_of_coffee.JPG",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "18",
   },
   {
@@ -240,7 +240,7 @@ export const coffeeData: ProductDto[] = [
       "https://upload.wikimedia.org/wikipedia/commons/9/9b/Cuban_coffee-_2013-04-05_14-30.jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "19",
   },
   {
@@ -252,7 +252,7 @@ export const coffeeData: ProductDto[] = [
       "https://commons.wikimedia.org/wiki/File:Agua_Panela_con_Queso_Fresco_at_La_Puerta_Falsa_(5617496209).jpg#/media/File:Agua_Panela_con_Queso_Fresco_at_La_Puerta_Falsa_(5617496209).jpg",
     price: 20,
     quantity: 1,
-    categoryCoffeeId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
+    categoryProductsId: "420bcbc1-df1c-4e75-8518-1a86762ae61e",
     id: "20",
   },
 ];
