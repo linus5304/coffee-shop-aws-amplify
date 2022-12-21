@@ -8,6 +8,7 @@ const nextConfig = {
       "upload.wikimedia.org",
       "commons.wikimedia.org",
       "coffee.alexflipnote.dev",
+      "static.vecteezy.com",
     ],
   },
   reactStrictMode: true,
