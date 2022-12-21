@@ -10,7 +10,7 @@ export const createCategory = /* GraphQL */ `
     createCategory(input: $input, condition: $condition) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -21,12 +21,14 @@ export const createCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
         }
         nextToken
       }
       createdAt
       updatedAt
+      userCategoriesId
     }
   }
 `;
@@ -38,7 +40,7 @@ export const updateCategory = /* GraphQL */ `
     updateCategory(input: $input, condition: $condition) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -49,12 +51,14 @@ export const updateCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
         }
         nextToken
       }
       createdAt
       updatedAt
+      userCategoriesId
     }
   }
 `;
@@ -66,7 +70,7 @@ export const deleteCategory = /* GraphQL */ `
     deleteCategory(input: $input, condition: $condition) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -77,7 +81,126 @@ export const deleteCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      userCategoriesId
+    }
+  }
+`;
+export const createProduct = /* GraphQL */ `
+  mutation CreateProduct(
+    $input: CreateProductInput!
+    $condition: ModelProductConditionInput
+  ) {
+    createProduct(input: $input, condition: $condition) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const updateProduct = /* GraphQL */ `
+  mutation UpdateProduct(
+    $input: UpdateProductInput!
+    $condition: ModelProductConditionInput
+  ) {
+    updateProduct(input: $input, condition: $condition) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const deleteProduct = /* GraphQL */ `
+  mutation DeleteProduct(
+    $input: DeleteProductInput!
+    $condition: ModelProductConditionInput
+  ) {
+    deleteProduct(input: $input, condition: $condition) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
         }
         nextToken
       }
@@ -86,60 +209,186 @@ export const deleteCategory = /* GraphQL */ `
     }
   }
 `;
-export const createCoffee = /* GraphQL */ `
-  mutation CreateCoffee(
-    $input: CreateCoffeeInput!
-    $condition: ModelCoffeeConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createCoffee(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
     }
   }
 `;
-export const updateCoffee = /* GraphQL */ `
-  mutation UpdateCoffee(
-    $input: UpdateCoffeeInput!
-    $condition: ModelCoffeeConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateCoffee(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
     }
   }
 `;
-export const deleteCoffee = /* GraphQL */ `
-  mutation DeleteCoffee(
-    $input: DeleteCoffeeInput!
-    $condition: ModelCoffeeConditionInput
+export const createOrder = /* GraphQL */ `
+  mutation CreateOrder(
+    $input: CreateOrderInput!
+    $condition: ModelOrderConditionInput
   ) {
-    deleteCoffee(input: $input, condition: $condition) {
+    createOrder(input: $input, condition: $condition) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
+      userOrdersId
+    }
+  }
+`;
+export const updateOrder = /* GraphQL */ `
+  mutation UpdateOrder(
+    $input: UpdateOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    updateOrder(input: $input, condition: $condition) {
+      id
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
+      createdAt
+      updatedAt
+      userOrdersId
+    }
+  }
+`;
+export const deleteOrder = /* GraphQL */ `
+  mutation DeleteOrder(
+    $input: DeleteOrderInput!
+    $condition: ModelOrderConditionInput
+  ) {
+    deleteOrder(input: $input, condition: $condition) {
+      id
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
+      createdAt
+      updatedAt
+      userOrdersId
     }
   }
 `;

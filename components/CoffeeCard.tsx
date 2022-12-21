@@ -32,10 +32,8 @@ export const CoffeeCard: React.FC<CoffeeCardProps> = ({
   const [category, setCategory] = useState("");
   const { categoryList } = useStore();
   useEffect(() => {
-    const item = categoryList.find(item => item.id === categoryCoffeeId);
+    const item = categoryList?.find(item => item.id === categoryCoffeeId);
     setCategory(item?.name ?? "");
-    console.log("cat id", categoryCoffeeId)
-    console.log("item", item)
   }, []);
   return (
     <Card maxW="sm">

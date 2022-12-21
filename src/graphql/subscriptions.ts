@@ -7,7 +7,7 @@ export const onCreateCategory = /* GraphQL */ `
     onCreateCategory(filter: $filter) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -18,12 +18,14 @@ export const onCreateCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
         }
         nextToken
       }
       createdAt
       updatedAt
+      userCategoriesId
     }
   }
 `;
@@ -32,7 +34,7 @@ export const onUpdateCategory = /* GraphQL */ `
     onUpdateCategory(filter: $filter) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -43,12 +45,14 @@ export const onUpdateCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
         }
         nextToken
       }
       createdAt
       updatedAt
+      userCategoriesId
     }
   }
 `;
@@ -57,7 +61,7 @@ export const onDeleteCategory = /* GraphQL */ `
     onDeleteCategory(filter: $filter) {
       id
       name
-      coffee {
+      products {
         items {
           id
           title
@@ -68,7 +72,114 @@ export const onDeleteCategory = /* GraphQL */ `
           description
           createdAt
           updatedAt
-          categoryCoffeeId
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      userCategoriesId
+    }
+  }
+`;
+export const onCreateProduct = /* GraphQL */ `
+  subscription OnCreateProduct($filter: ModelSubscriptionProductFilterInput) {
+    onCreateProduct(filter: $filter) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const onUpdateProduct = /* GraphQL */ `
+  subscription OnUpdateProduct($filter: ModelSubscriptionProductFilterInput) {
+    onUpdateProduct(filter: $filter) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const onDeleteProduct = /* GraphQL */ `
+  subscription OnDeleteProduct($filter: ModelSubscriptionProductFilterInput) {
+    onDeleteProduct(filter: $filter) {
+      id
+      title
+      price
+      image
+      ingredients
+      quantity
+      description
+      createdAt
+      updatedAt
+      categoryProductsId
+      userProductsId
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser($filter: ModelSubscriptionUserFilterInput) {
+    onCreateUser(filter: $filter) {
+      id
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
         }
         nextToken
       }
@@ -77,51 +188,171 @@ export const onDeleteCategory = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCoffee = /* GraphQL */ `
-  subscription OnCreateCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
-    onCreateCoffee(filter: $filter) {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser($filter: ModelSubscriptionUserFilterInput) {
+    onUpdateUser(filter: $filter) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
     }
   }
 `;
-export const onUpdateCoffee = /* GraphQL */ `
-  subscription OnUpdateCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
-    onUpdateCoffee(filter: $filter) {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser($filter: ModelSubscriptionUserFilterInput) {
+    onDeleteUser(filter: $filter) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      authToken
+      firstName
+      lastName
+      profilePictureUrl
+      dateOfBirth
+      gender
+      address
+      telephone
+      orders {
+        items {
+          id
+          orderDate
+          total
+          createdAt
+          updatedAt
+          userOrdersId
+        }
+        nextToken
+      }
+      products {
+        items {
+          id
+          title
+          price
+          image
+          ingredients
+          quantity
+          description
+          createdAt
+          updatedAt
+          categoryProductsId
+          userProductsId
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          name
+          createdAt
+          updatedAt
+          userCategoriesId
+        }
+        nextToken
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
     }
   }
 `;
-export const onDeleteCoffee = /* GraphQL */ `
-  subscription OnDeleteCoffee($filter: ModelSubscriptionCoffeeFilterInput) {
-    onDeleteCoffee(filter: $filter) {
+export const onCreateOrder = /* GraphQL */ `
+  subscription OnCreateOrder($filter: ModelSubscriptionOrderFilterInput) {
+    onCreateOrder(filter: $filter) {
       id
-      title
-      price
-      image
-      ingredients
-      quantity
-      description
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
       createdAt
       updatedAt
-      categoryCoffeeId
+      userOrdersId
+    }
+  }
+`;
+export const onUpdateOrder = /* GraphQL */ `
+  subscription OnUpdateOrder($filter: ModelSubscriptionOrderFilterInput) {
+    onUpdateOrder(filter: $filter) {
+      id
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
+      createdAt
+      updatedAt
+      userOrdersId
+    }
+  }
+`;
+export const onDeleteOrder = /* GraphQL */ `
+  subscription OnDeleteOrder($filter: ModelSubscriptionOrderFilterInput) {
+    onDeleteOrder(filter: $filter) {
+      id
+      orderDate
+      total
+      orderDetails {
+        firstName
+        lastName
+        email
+        address
+        city
+        notes
+      }
+      createdAt
+      updatedAt
+      userOrdersId
     }
   }
 `;

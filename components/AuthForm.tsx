@@ -1,23 +1,10 @@
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import {
-  useDisclosure,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalFooter,
+  Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay
 } from "@chakra-ui/react";
-import { API } from "aws-amplify";
 import { Form, Formik } from "formik";
 import React from "react";
-import { CoffeeDto } from "../src/data";
-import { createCoffee } from "../src/graphql/mutations";
 import useStore from "../store/store";
 import { InputField } from "./InputField";
 
@@ -41,20 +28,6 @@ export const AuthForm: React.FC<AuthForm> = ({ isOpen, onClose, onOpen }) => {
     context.toSignIn,
   ]);
 
-  async function handleCreatePost(data: CoffeeDto) {
-    try {
-      await API.graphql<CoffeeDto>({
-        authMode: "API_KEY",
-        query: createCoffee,
-        variables: {
-          input: data,
-        },
-      });
-    } catch (error) {
-      console.log("Errors ", error);
-    }
-  }
-
   return (
     <>
       <Modal
@@ -67,7 +40,7 @@ export const AuthForm: React.FC<AuthForm> = ({ isOpen, onClose, onOpen }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={(data, { resetForm }) => {
-            toSignIn(data)
+            toSignIn(data);
             resetForm();
             onClose();
           }}

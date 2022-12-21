@@ -12,12 +12,13 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/legacy/image";
 import React, { useEffect, useState } from "react";
-import { CoffeeDto } from "../src/data";
+import { ProductDto } from "../src/data";
 import useStore from "../store/store";
 import { AiFillDelete } from "react-icons/ai";
+import { formatter } from "../utils/utils";
 
 interface CartItemProps {
-  data: CoffeeDto;
+  data: ProductDto;
 }
 
 export const CartItem: React.FC<CartItemProps> = ({ data }) => {
@@ -31,7 +32,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
   } = useStore();
 
   useEffect(() => {
-    updateCartItem(data?.id ?? '', { ...data, quantity: count });
+    updateCartItem(data?.id ?? "", { ...data, quantity: count });
     setCartQuantity();
     setTotal();
   }, [count]);
@@ -41,7 +42,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
         <Grid templateColumns="repeat(5, 1fr)" gap={6}>
           <Box>
             <Image
-              src={data?.image ?? ''}
+              src={data?.image ?? ""}
               alt="Green double couch with wooden legs"
               layout="fixed"
               width={50}
@@ -50,13 +51,13 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
             <Text size="sm">{data.title}</Text>
           </Box>
           <Text color="blue.600" fontSize="2xl">
-            {data.price}
+            {formatter.format(data.price)}
           </Text>
           <Text color="blue.600" fontSize="2xl">
             {data.quantity}
           </Text>
           <Text color="blue.600" fontSize="2xl">
-            {data?.quantity ?? 1 * data?.price!}
+            {formatter.format(data.quantity * data.price)}
           </Text>
           <Box>
             <Flex gap={2}>
@@ -67,6 +68,7 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
                     else return prev;
                   });
                 }}
+                variant="brandSecondary"
               >
                 -
               </Button>
@@ -75,13 +77,14 @@ export const CartItem: React.FC<CartItemProps> = ({ data }) => {
                 onClick={() => {
                   setCount(prev => prev + 1);
                 }}
+                variant="brandSecondary"
               >
                 +
               </Button>
               <IconButton
                 aria-label="delete"
                 onClick={() => {
-                  deleteCartItem(data.id ?? '', coffeeInCart);
+                  deleteCartItem(data.id ?? "", coffeeInCart);
                   setCartQuantity();
                   setTotal();
                 }}

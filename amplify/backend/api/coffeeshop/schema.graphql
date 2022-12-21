@@ -30,19 +30,23 @@ type User @model {
   address: String
   telephone: String
   orders: [Order] @hasMany
+  products: [Product] @hasMany
+  categories: [Category] @hasMany
 }
 
 type Order @model {
   id: ID!
-  orderNumber: Int
   orderDate: String
+  total: Int
+  orderDetails: OrderDetails
 }
 
-type OrderDetails @model {
-  id: ID!
-  productId: String 
-  orderId: String
-  price: Int
-  quantity: Int
-  billDate: String
+type OrderDetails {
+  firstName: String
+  lastName: String
+  email: String
+  address: String
+  city: String
+  notes: String
+  products: [Product]
 }

@@ -1,4 +1,4 @@
-export type CoffeeDto = {
+export type ProductDto = {
   id?: string | null;
   title?: string | null;
   price?: number | null;
@@ -15,7 +15,7 @@ export type CategoryDto = {
   name: string;
 };
 
-export const coffeeData: CoffeeDto[] = [
+export const coffeeData: ProductDto[] = [
   {
     title: "Black",
     description:

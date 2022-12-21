@@ -1,14 +1,11 @@
-import { Authenticator } from "@aws-amplify/ui-react";
-import {
-  Box, Button, Flex
-} from "@chakra-ui/react";
-import { API } from "aws-amplify";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
 import React from "react";
 import { InputField } from "../../components/InputField";
 import { CreateCategoryInput } from "../../src/API";
-import { createCategory } from "../../src/graphql/mutations";
+import  { handleCreateCategory } from "../../store/api";
 import useStore from "../../store/store";
 
 interface AddProps {}
@@ -18,32 +15,21 @@ const Add: React.FC<AddProps> = ({}) => {
     name: "",
   };
 
-  async function handleCreateCategory(data: CreateCategoryInput) {
-    try {
-      const result = await API.graphql<CreateCategoryInput>({
-        authMode: "API_KEY",
-        query: createCategory,
-        variables: {
-          input: data,
-        },
-      });
-      console.log("Result ", result);
-    } catch (error) {
-      console.log("Errors ", error);
-    }
-  }
-
   const { addCoffee, setNewCoffee } = useStore();
+  const { user } = useAuthenticator();
   const router = useRouter();
+  const toast = useToast()
   return (
     <>
       <Authenticator loginMechanisms={["username"]}>
         <Box maxW="60%" mx="auto">
           <Formik
             initialValues={initialValues}
-            onSubmit={(data, { resetForm }) => {
-              console.log(data);
-              handleCreateCategory(data);
+            onSubmit={(data, { resetForm }) => { 
+              handleCreateCategory({
+                ...data,
+                userCategoriesId: user.username,
+              }, toast);
               resetForm();
             }}
           >
@@ -51,10 +37,10 @@ const Add: React.FC<AddProps> = ({}) => {
               <Flex direction="column" gap={4}>
                 <InputField name="name" label="Name" />
                 <Flex>
-                  <Button colorScheme="blue" mr={3} type="submit" px={8}>
+                  <Button variant="brandSecondary" mr={3} type="submit" px={8}>
                     Save
                   </Button>
-                  <Button onClick={() => router.push("/")} px={8}>
+                  <Button variant="outline" onClick={() => router.push("/")} px={8}>
                     Cancel
                   </Button>
                 </Flex>

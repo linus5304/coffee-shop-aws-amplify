@@ -1,8 +1,8 @@
 import { coffeeData } from "../src/data";
-import { handleCreateCoffee } from "../store/store";
+import { handleCreateProduct } from "../store/api";
 
 export function seedCoffeeDB() {
   for (let coffee of coffeeData) {
-    handleCreateCoffee(coffee);
+    handleCreateProduct(coffee);
   }
 }

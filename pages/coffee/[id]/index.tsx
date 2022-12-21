@@ -35,6 +35,7 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
             width={400}
             layout="fixed"
             priority={true}
+            alt="demo"
           />
         </Box>
         <Box>
@@ -47,14 +48,24 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
           <Text fontSize="md">{selectedItem?.description}</Text>
           <Flex gap={4} direction="column">
             <Flex gap={2}>
-              <Button onClick={() => removeQuantity(selectedItem)}>-</Button>
+              <Button
+                variant="brandSecondary"
+                onClick={() => removeQuantity(selectedItem)}
+              >
+                -
+              </Button>
               <Input
                 width={20}
                 value={selectedItem?.quantity ?? 1}
                 type="number"
                 placeholder="0"
               />
-              <Button onClick={() => addQuantity(selectedItem)}>+</Button>
+              <Button
+                variant="brandSecondary"
+                onClick={() => addQuantity(selectedItem)}
+              >
+                +
+              </Button>
             </Flex>
             <Box>
               <Button
@@ -64,6 +75,7 @@ const Index: React.FC<CoffeeItemProps> = ({}) => {
                   addToCart();
                   setCartQuantity();
                 }}
+                variant="brandSecondary"
               >
                 Add to cart
               </Button>

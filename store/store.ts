@@ -1,81 +1,45 @@
-import { API } from "aws-amplify";
-import { GraphQLQuery } from "@aws-amplify/api";
 import create from "zustand";
-import { CreateCoffeeInput, ListCategoriesQuery } from "../src/API";
-import { CategoryDto, CoffeeDto, coffeeData } from "../src/data";
 import {
-  getCategory,
-  listCategories,
-  listCoffees,
-} from "../src/graphql/queries";
-import { createCoffee } from "../src/graphql/mutations";
+  CreateOrderInput,
+  CreateProductInput
+} from "../src/API";
+import { CategoryDto, coffeeData, ProductDto } from "../src/data";
+import { getCategoryList, getCoffeeList, getUserOrders } from "./api";
+
+
+
 // create store
 type Store = {
   total: number;
-  setTotal: () => void;
-  coffeeList: CoffeeDto[];
+  coffeeList: ProductDto[];
   categoryList: CategoryDto[];
-  setCategoryList: () => void;
-  setCoffeeList: () => void;
-  coffeeInCart: CoffeeDto[];
-  addCoffee: () => void;
-  newCoffee: CoffeeDto;
-  selectedItem: CoffeeDto;
+  coffeeInCart: ProductDto[];
+  newCoffee: ProductDto;
+  selectedItem: ProductDto;
   cartQuantity: number;
-  setSelectedItem: (item: CoffeeDto) => void;
-  setNewCoffee: (coffee: CreateCoffeeInput) => void;
+  userOrders: CreateOrderInput[];
+  addCoffee: () => void;
+  addOrder: (item: CreateOrderInput) => void;
+  setCategoryList: (userId?: string) => void;
+  setCoffeeList: () => void;
+  setTotal: () => void;
+  setSelectedItem: (item: ProductDto) => void;
+  setNewCoffee: (coffee: CreateProductInput) => void;
   addToCart: () => void;
-  addQuantity: (item: CoffeeDto) => void;
-  removeQuantity: (item: CoffeeDto) => void;
+  addQuantity: (item: ProductDto) => void;
+  removeQuantity: (item: ProductDto) => void;
   setCartQuantity: () => void;
-  updateCartItem: (id: string, data: CoffeeDto) => void;
-  deleteCartItem: (id: string, cartList: CoffeeDto[]) => void;
+  updateCartItem: (id: string, data: ProductDto) => void;
+  deleteCartItem: (id: string, cartList: ProductDto[]) => void;
+  clearCart: () => void;
+  setUserOrder: (userId: string) => void;
 };
 
-async function getCategoryList() {
-  try {
-    const result = await API.graphql<{ data: any }>({
-      authMode: "API_KEY",
-      query: listCategories,
-    });
-    console.log("Categories ", result);
-    return result["data"].listCategories.items as CategoryDto[];
-  } catch (error) {
-    console.log("Errors ", error);
-  }
-}
-async function getCoffeeList() {
-  try {
-    const result = await API.graphql<CategoryDto>({
-      authMode: "API_KEY",
-      query: listCoffees,
-    });
-    console.log("Coffee ", result);
-    return result["data"].listCoffees.items as CoffeeDto[];
-  } catch (error) {
-    console.log("Errors ", error);
-  }
-}
-
-export async function handleCreateCoffee(data: CreateCoffeeInput) {
-  try {
-    await API.graphql<{ data: any }>({
-      authMode: "API_KEY",
-      query: createCoffee,
-      variables: {
-        input: data,
-      },
-    });
-  } catch (error) {
-    console.log("Errors ", error);
-  }
-}
-
-const addCoffee = (coffeeList: CoffeeDto[], newCoffee: CoffeeDto) => {
+const addCoffee = (coffeeList: ProductDto[], newCoffee: ProductDto) => {
   return [...coffeeList, newCoffee];
 };
 
-const addToCart = (cartList: CoffeeDto[], newCoffee: CoffeeDto) => {
+const addToCart = (cartList: ProductDto[], newCoffee: ProductDto) => {
   const data = cartList.find(item => item.id === newCoffee.id);
   if (data) {
     return [
@@ -90,9 +54,9 @@ const addToCart = (cartList: CoffeeDto[], newCoffee: CoffeeDto) => {
 };
 
 const updateCartItem = (
-  cartList: CoffeeDto[],
+  cartList: ProductDto[],
   id: string,
-  newItem: CoffeeDto
+  newItem: ProductDto
 ) => {
   return cartList.map(item => {
     if (item.id === id) return { ...newItem };
@@ -100,25 +64,26 @@ const updateCartItem = (
   });
 };
 
-const setSelectedItem = (item: CoffeeDto) => {
+const setSelectedItem = (item: ProductDto) => {
   return item;
 };
-const setCartQuantity = (cartItems: CoffeeDto[]) => {
+const setCartQuantity = (cartItems: ProductDto[]) => {
   return cartItems.reduce((a, c) => a + c.quantity!, 0);
 };
 
-const deleteItem = (cartItems: CoffeeDto[], id: string) => {
+const deleteItem = (cartItems: ProductDto[], id: string) => {
   return cartItems.filter(item => item.id !== id);
 };
 
 const useStore = create<Store>()(set => ({
-  coffeeList: [],
+  coffeeList: coffeeData,
   coffeeInCart: [],
   quantity: 1,
   selectedItem: null!,
   cartQuantity: 0,
   total: 0,
   categoryList: [],
+  userOrders: [],
   setCoffeeList: async () => {
     const data = await getCoffeeList();
     set(state => ({
@@ -126,7 +91,7 @@ const useStore = create<Store>()(set => ({
       coffeeList: data,
     }));
   },
-  setSelectedItem(item: CoffeeDto) {
+  setSelectedItem(item: ProductDto) {
     set(state => ({
       ...state,
       selectedItem: setSelectedItem(item),
@@ -140,7 +105,7 @@ const useStore = create<Store>()(set => ({
     }));
   },
   newCoffee: null!,
-  setNewCoffee(data: CoffeeDto | undefined) {
+  setNewCoffee(data: ProductDto | undefined) {
     set(state => ({
       ...state,
       newCoffee: data,
@@ -152,13 +117,13 @@ const useStore = create<Store>()(set => ({
       coffeeInCart: addToCart(state.coffeeInCart, state.newCoffee),
     }));
   },
-  addQuantity(data: CoffeeDto) {
+  addQuantity(data: ProductDto) {
     set(state => ({
       ...state,
       selectedItem: setSelectedItem({ ...data, quantity: data.quantity! + 1 }),
     }));
   },
-  removeQuantity(data: CoffeeDto) {
+  removeQuantity(data: ProductDto) {
     set(state => ({
       ...state,
       selectedItem: setSelectedItem({
@@ -176,7 +141,7 @@ const useStore = create<Store>()(set => ({
       cartQuantity: setCartQuantity(state.coffeeInCart),
     }));
   },
-  updateCartItem(id: string, data: CoffeeDto) {
+  updateCartItem(id: string, data: ProductDto) {
     set(state => ({
       ...state,
       coffeeInCart: updateCartItem(state.coffeeInCart, id, data),
@@ -194,11 +159,32 @@ const useStore = create<Store>()(set => ({
       coffeeInCart: deleteItem(state.coffeeInCart, id),
     }));
   },
-  setCategoryList: async () => {
-    const data = await getCategoryList();
+  setCategoryList: async (userId?: string) => {
+    const data = await getCategoryList(userId);
     set(state => ({
       ...state,
       categoryList: data,
+    }));
+  },
+  addOrder: (item: CreateOrderInput) => {
+    set(state => ({
+      ...state,
+      userOrders: [...state.userOrders, item],
+    }));
+  },
+  clearCart: () => {
+    set(state => ({
+      ...state,
+      coffeeInCart: [],
+      cartQuantity: 0,
+      total: 0,
+    }));
+  },
+  setUserOrder: async (userId: string) => {
+    const data = await getUserOrders(userId);
+    set(state => ({
+      ...state,
+      userOrders: data,
     }));
   },
 }));

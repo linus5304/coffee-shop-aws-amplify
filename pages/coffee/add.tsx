@@ -1,46 +1,32 @@
-import { Authenticator } from "@aws-amplify/ui-react";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import {
-  Box, Button, Flex
+  Box, Button, Flex, useToast
 } from "@chakra-ui/react";
 import { API } from "aws-amplify";
 import { Form, Formik } from "formik";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import * as z from "yup";
 import { InputField } from "../../components/InputField";
-import { CreateCoffeeInput } from "../../src/API";
-import { CoffeeDto } from "../../src/data";
-import { createCoffee } from "../../src/graphql/mutations";
+import { CreateProductInput } from "../../src/API";
+import { handleCreateProduct } from "../../store/api";
 import useStore from "../../store/store";
 
 interface AddProps {}
 
 const Add: React.FC<AddProps> = ({}) => {
-  const initialValues: CreateCoffeeInput = {
+  const initialValues: CreateProductInput = {
     title: "",
     description: "",
     image: "",
     ingredients: [],
     price: 0,
     quantity: 1,
-    categoryCoffeeId: "",
+    categoryProductsId: "",
   };
 
-  async function handleCreatePost(data: CreateCoffeeInput) {
-    try {
-      await API.graphql<{data: any}>({
-        authMode: "API_KEY",
-        query: createCoffee,
-        variables: {
-          input: data,
-        },
-      });
-    } catch (error) {
-      console.log("Errors ", error);
-    }
-  }
-
   const { addCoffee, setNewCoffee, categoryList, setCategoryList } = useStore();
+  const {user} = useAuthenticator(ctx => [ctx.user])
   const router = useRouter();
 
   const validationSchema = z.object().shape({
@@ -52,6 +38,10 @@ const Add: React.FC<AddProps> = ({}) => {
     quantity: z.number(),
     categoryCoffeeId: z.string().required("Please select a category"),
   });
+  const toast = useToast()
+  useEffect(() => {
+    setCategoryList()
+  })
   return (
     <>
       <Authenticator socialProviders={["google"]}>
@@ -60,7 +50,7 @@ const Add: React.FC<AddProps> = ({}) => {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(data, { resetForm }) => {
-              handleCreatePost(data);
+              handleCreateProduct({...data, userProductsId: user.username}, toast);
               setNewCoffee(data);
               addCoffee();
               resetForm();
@@ -80,10 +70,10 @@ const Add: React.FC<AddProps> = ({}) => {
                   options={categoryList}
                 />
                 <Flex>
-                  <Button colorScheme="blue" mr={3} type="submit" px={8}>
+                  <Button variant="brandSecondary" mr={3} type="submit" px={8}>
                     Save
                   </Button>
-                  <Button onClick={() => router.push("/")} px={8}>
+                  <Button variant="outline" onClick={() => router.push("/")} px={8}>
                     Cancel
                   </Button>
                 </Flex>
